@@ -20,10 +20,7 @@ class LoginScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: BlocProvider(
         create: (context) {
-          return LoginBloc(
-            userRepository: userRepository,
-            authBloc: BlocProvider.of<AuthBloc>(context),
-          );
+          return LoginBloc(userRepository: userRepository, authBloc: BlocProvider.of<AuthBloc>(context));
         },
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {

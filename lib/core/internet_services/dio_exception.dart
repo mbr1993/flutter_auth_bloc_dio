@@ -1,27 +1,27 @@
 import 'package:dio/dio.dart';
 
-class DioException implements Exception {
+class DioErrors implements Exception {
   late String errorMessage;
 
-  DioException.fromDioError(DioError dioError) {
-    switch (dioError.type) {
-      case DioErrorType.cancel:
+  DioErrors(DioException dioException) {
+    switch (dioException.type) {
+      case DioExceptionType.cancel:
         errorMessage = "Request to the server was cancelled.";
         break;
-      case DioErrorType.connectionTimeout:
+      case DioExceptionType.connectionTimeout:
         errorMessage = "Connection timed out.";
         break;
-      case DioErrorType.receiveTimeout:
+      case DioExceptionType.receiveTimeout:
         errorMessage = "Receiving timeout occurred.";
         break;
-      case DioErrorType.sendTimeout:
+      case DioExceptionType.sendTimeout:
         errorMessage = "Request send timeout.";
         break;
-      case DioErrorType.badResponse:
-        errorMessage = _handleStatusCode(dioError.response?.statusCode);
+      case DioExceptionType.badResponse:
+        errorMessage = _handleStatusCode(dioException.response?.statusCode);
         break;
-      case DioErrorType.unknown:
-        if (dioError.message!.contains('SocketException')) {
+      case DioExceptionType.unknown:
+        if (dioException.message!.contains('SocketException')) {
           errorMessage = 'No Internet.';
           break;
         }

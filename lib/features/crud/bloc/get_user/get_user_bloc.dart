@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/internet_services/crud_service.dart';
-import '../../domain/model/user.dart';
+import '../../model/user.dart';
 
 part 'get_user_event.dart';
 
