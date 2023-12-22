@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   );
                                                   Navigator.pop(context);
                                                 },
-                                                child: const Text('Submit')),
+                                                child: const Text('Update')),
                                             const SizedBox(height: 16),
                                           ],
                                         ),
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                           Navigator.pop(context);
                         },
-                        child: const Text('Submit')),
+                        child: const Text('Create')),
                     const SizedBox(height: 16),
                   ],
                 ),
