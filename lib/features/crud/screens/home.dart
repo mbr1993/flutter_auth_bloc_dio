@@ -18,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController jobController = TextEditingController();
+  TextEditingController idController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             const SizedBox(height: 20),
                                             customTextFormField('Enter job', jobController),
                                             const SizedBox(height: 16),
-                                            customTextFormField(user.id.toString(), jobController),
+                                            customTextFormField(user.id.toString(), idController),
                                             const SizedBox(height: 16),
                                             ElevatedButton(
                                                 onPressed: () {
@@ -159,6 +160,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SnackBar(content: Text('User Created')),
                           );
                           Navigator.pop(context);
+                          nameController.clear();
+                          jobController.clear();
                         },
                         child: const Text('Create')),
                     const SizedBox(height: 16),
