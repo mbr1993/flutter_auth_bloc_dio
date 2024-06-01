@@ -9,14 +9,14 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final AuthRepository userRepository;
-  final AuthBloc authBloc;
-
-  LoginBloc({required this.userRepository, required this.authBloc}) : super(LoginInitial()) {
+  LoginBloc({
+    required this.userRepository,
+    required this.authBloc,
+  }) : super(LoginInitial()) {
     on<LoginButtonPressed>((event, emit) async {
       emit(LoginLoading());
       try {
-        final String token = await userRepository.login(event.email, event.password);
+        final token = await userRepository.login(event.email, event.password);
         authBloc.add(LoggedIn(token: token));
         emit(LoginInitial());
       } catch (e) {
@@ -26,4 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     });
   }
+
+  final AuthRepository userRepository;
+  final AuthBloc authBloc;
 }

@@ -7,9 +7,9 @@ import '../bloc/login_bloc/login_bloc.dart';
 import '../repositories/repositories.dart';
 
 class LoginScreen extends StatelessWidget {
-  final AuthRepository userRepository;
+  LoginScreen({required this.userRepository, super.key});
 
-  LoginScreen({super.key, required this.userRepository});
+  final AuthRepository userRepository;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -20,7 +20,10 @@ class LoginScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: BlocProvider(
         create: (context) {
-          return LoginBloc(userRepository: userRepository, authBloc: BlocProvider.of<AuthBloc>(context));
+          return LoginBloc(
+            userRepository: userRepository,
+            authBloc: BlocProvider.of<AuthBloc>(context),
+          );
         },
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
@@ -43,60 +46,66 @@ class LoginScreen extends StatelessWidget {
                         child: const Column(
                           children: [
                             Text(
-                              "Admin Login",
-                              style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold, fontSize: 24.0),
+                              'Admin Login',
+                              style: TextStyle(
+                                color: Colors.deepPurple,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                              ),
                             ),
-                            SizedBox(height: 5.0),
+                            SizedBox(height: 5),
                             Text(
-                              "Login app using BLOC, DIO, REST API",
-                              style: TextStyle(fontSize: 10.0, color: Colors.black38),
+                              'Login app using BLOC, DIO, REST API',
+                              style: TextStyle(fontSize: 10, color: Colors.black38),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 30),
                       TextFormField(
-                        style: const TextStyle(fontSize: 14.0, color: Colors.deepPurple),
+                        style: const TextStyle(fontSize: 14, color: Colors.deepPurple),
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.person_outline, color: Colors.black26),
                           enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.deepPurpleAccent)),
-                          contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
-                          labelText: "Username",
-                          hintStyle: TextStyle(fontSize: 12.0, color: Colors.grey, fontWeight: FontWeight.w500),
-                          labelStyle: TextStyle(fontSize: 12.0, color: Colors.grey, fontWeight: FontWeight.w500),
+                          contentPadding: EdgeInsets.only(left: 10, right: 10),
+                          labelText: 'Username',
+                          hintStyle: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w500),
+                          labelStyle: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w500),
                         ),
                         autocorrect: false,
                       ),
-                      const SizedBox(height: 20.0),
+                      const SizedBox(height: 20),
                       TextFormField(
-                        style: const TextStyle(fontSize: 14.0, color: Colors.deepPurple),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.deepPurple,
+                        ),
                         controller: _passwordController,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.lock_outline, color: Colors.black26),
                           enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black12)),
                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.deepPurpleAccent)),
-                          contentPadding: EdgeInsets.only(left: 10.0, right: 10.0),
-                          labelText: "Password",
-                          hintStyle: TextStyle(fontSize: 12.0, color: Colors.grey, fontWeight: FontWeight.w500),
-                          labelStyle: TextStyle(fontSize: 12.0, color: Colors.grey, fontWeight: FontWeight.w500),
+                          contentPadding: EdgeInsets.only(left: 10, right: 10),
+                          labelText: 'Password',
+                          hintStyle: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w500),
+                          labelStyle: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w500),
                         ),
                         autocorrect: false,
                         obscureText: true,
                       ),
-                      const SizedBox(height: 20.0),
+                      const SizedBox(height: 20),
                       Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
-                          child:
-                              const Text("Forget password?", style: TextStyle(color: Colors.black45, fontSize: 12.0)),
+                          child: const Text('Forget password?', style: TextStyle(color: Colors.black45, fontSize: 12)),
                           onTap: () {},
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 30.0, bottom: 20.0),
+                        padding: const EdgeInsets.only(top: 30, bottom: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[

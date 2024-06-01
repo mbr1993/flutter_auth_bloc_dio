@@ -1,19 +1,18 @@
 import 'package:dio/dio.dart';
-
-import '../../features/crud/model/new_user.dart';
-import '../../features/crud/model/user.dart';
-import 'dio_client.dart';
-import 'dio_exception.dart';
-import 'path.dart';
+import 'package:flutter_auth_bloc_dio/core/internet_services/dio_client.dart';
+import 'package:flutter_auth_bloc_dio/core/internet_services/dio_exception.dart';
+import 'package:flutter_auth_bloc_dio/core/internet_services/path.dart';
+import 'package:flutter_auth_bloc_dio/features/crud/model/new_user.dart';
+import 'package:flutter_auth_bloc_dio/features/crud/model/user.dart';
 
 class CrudService {
   Future<List<User>> getUserList() async {
     try {
       final response = await DioClient.instance.get(path);
-      final userList = (response["data"] as List).map((e) => User.fromJson(e)).toList();
+      final userList = (response["data"] as List).map((e) => User.fromJson(e as Map<String, dynamic>)).toList();
       return userList;
     } on DioException catch (e) {
-      var error = DioErrors(e);
+      final error = DioErrors(e);
       throw error.errorMessage;
     }
   }
@@ -26,7 +25,7 @@ class CrudService {
       );
       return NewUser.fromJson(response);
     } on DioException catch (e) {
-      var error = DioErrors(e);
+      final error = DioErrors(e);
       throw error.errorMessage;
     }
   }
@@ -39,7 +38,7 @@ class CrudService {
       );
       return NewUser.fromJson(response);
     } on DioException catch (e) {
-      var error = DioErrors(e);
+      final error = DioErrors(e);
       throw error.errorMessage;
     }
   }
@@ -48,7 +47,7 @@ class CrudService {
     try {
       await DioClient.instance.delete("$path/$id");
     } on DioException catch (e) {
-      var error = DioErrors(e);
+      final error = DioErrors(e);
       throw error.errorMessage;
     }
   }

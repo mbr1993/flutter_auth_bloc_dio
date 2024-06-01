@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import 'path.dart';
+import 'package:flutter_auth_bloc_dio/core/internet_services/path.dart';
 
 class DioClient {
   DioClient._();
@@ -12,7 +12,6 @@ class DioClient {
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 60),
-      responseType: ResponseType.json,
     ),
   );
 
@@ -31,17 +30,16 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       if (response.statusCode == 200) {
-        return response.data;
+        return response.data as Map<String, dynamic>;
       }
-      throw "something went wrong";
+      throw 'something went wrong';
     } catch (e) {
       rethrow;
     }
   }
 
   ///Post Method
-  Future<Map<String, dynamic>> post(
-      String path,
+  Future<Map<String, dynamic>> post(String path,
       {data,
       Map<String, dynamic>? queryParameters,
       Options? options,
@@ -59,9 +57,9 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return response.data;
+        return response.data as Map<String, dynamic>;
       }
-      throw "something went wrong";
+      throw 'something went wrong';
     } catch (e) {
       rethrow;
     }
@@ -86,9 +84,9 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       if (response.statusCode == 200) {
-        return response.data;
+        return response.data as Map<String, dynamic>;
       }
-      throw "something went wrong";
+      throw 'something went wrong';
     } catch (e) {
       rethrow;
     }
@@ -113,7 +111,7 @@ class DioClient {
       if (response.statusCode == 204) {
         return response.data;
       }
-      throw "something went wrong";
+      throw 'something went wrong';
     } catch (e) {
       rethrow;
     }

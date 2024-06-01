@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth_bloc_dio/features/auth/bloc/auth_bloc/auth_bloc.dart';
 import 'package:flutter_auth_bloc_dio/features/crud/bloc/create_user/create_user_bloc.dart';
+import 'package:flutter_auth_bloc_dio/features/crud/bloc/delete_user/delete_user_bloc.dart';
+import 'package:flutter_auth_bloc_dio/features/crud/bloc/get_user/get_user_bloc.dart';
+import 'package:flutter_auth_bloc_dio/features/crud/bloc/update_user/update_user_bloc.dart';
 import 'package:flutter_auth_bloc_dio/features/crud/screens/widgets/text_form_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../auth/bloc/auth_bloc/auth_bloc.dart';
-import '../bloc/delete_user/delete_user_bloc.dart';
-import '../bloc/get_user/get_user_bloc.dart';
-import '../bloc/update_user/update_user_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Padding(padding: EdgeInsets.only(right: 24.0), child: Icon(Icons.logout)),
+            icon: const Padding(padding: EdgeInsets.only(right: 24), child: Icon(Icons.logout)),
             onPressed: () {
               BlocProvider.of<AuthBloc>(context).add(LoggedOut());
             },
@@ -49,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.userList.length,
                       itemBuilder: (context, index) {
-                        var user = state.userList[index];
+                        final user = state.userList[index];
                         return ListTile(
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(30),
@@ -65,17 +64,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                     isScrollControlled: true,
                                     context: context,
                                     shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(top: Radius.circular(4))),
+                                      borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                                    ),
                                     builder: (context) {
                                       return Container(
                                         padding: EdgeInsets.only(
-                                            bottom: MediaQuery.of(context).viewInsets.bottom,
-                                            left: 16,
-                                            right: 16,
-                                            top: 16),
+                                          bottom: MediaQuery.of(context).viewInsets.bottom,
+                                          left: 16,
+                                          right: 16,
+                                          top: 16,
+                                        ),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             const SizedBox(height: 12),
@@ -86,20 +86,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                             customTextFormField(user.id.toString(), idController),
                                             const SizedBox(height: 16),
                                             ElevatedButton(
-                                                onPressed: () {
-                                                  BlocProvider.of<UpdateUserBloc>(context).add(
-                                                    UpdateUser(
-                                                      id: user.id.toString(),
-                                                      name: nameController.text,
-                                                      job: jobController.text,
-                                                    ),
-                                                  );
-                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                    const SnackBar(content: Text('User Updated')),
-                                                  );
-                                                  Navigator.pop(context);
-                                                },
-                                                child: const Text('Update')),
+                                              onPressed: () {
+                                                BlocProvider.of<UpdateUserBloc>(context).add(
+                                                  UpdateUser(
+                                                    id: user.id.toString(),
+                                                    name: nameController.text,
+                                                    job: jobController.text,
+                                                  ),
+                                                );
+                                                ScaffoldMessenger.of(context).showSnackBar(
+                                                  const SnackBar(content: Text('User Updated')),
+                                                );
+                                                Navigator.pop(context);
+                                                jobController.clear();
+                                              },
+                                              child: const Text('Update'),
+                                            ),
                                             const SizedBox(height: 16),
                                           ],
                                         ),
@@ -122,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                    )
+                    ),
                   ],
                 ),
               );
@@ -143,7 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom, left: 16, right: 16, top: 16),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     const SizedBox(height: 12),
@@ -152,18 +153,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     customTextFormField('Enter job', jobController),
                     const SizedBox(height: 16),
                     ElevatedButton(
-                        onPressed: () {
-                          BlocProvider.of<CreateUserBloc>(context).add(
-                            CreateUser(name: nameController.text, job: jobController.text),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('User Created')),
-                          );
-                          Navigator.pop(context);
-                          nameController.clear();
-                          jobController.clear();
-                        },
-                        child: const Text('Create')),
+                      onPressed: () {
+                        BlocProvider.of<CreateUserBloc>(context).add(
+                          CreateUser(name: nameController.text, job: jobController.text),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('User Created')),
+                        );
+                        Navigator.pop(context);
+                        nameController.clear();
+                        jobController.clear();
+                      },
+                      child: const Text('Create'),
+                    ),
                     const SizedBox(height: 16),
                   ],
                 ),
